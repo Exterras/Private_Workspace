@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1492605325 source:d:\workspace\c\fault_detection_05\main.c
+	<stdio.h>
+	<stdbool.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+

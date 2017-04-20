@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<bean id="calculator" class="com.github.exterras.ex02.Calculator">
+		<property name = "calculator">
+			<ref bean="calculator" />
+		</property>
+		<property name = "firstNum" value="10"/>
+		<property name = "secondNum" value="2"/>
+	</bean>
+</beans>

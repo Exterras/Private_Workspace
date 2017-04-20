@@ -1,0 +1,9 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyData {
+
+	public static void main(String[] args) {
+		FuzzyDTO
+	}
+	
+}

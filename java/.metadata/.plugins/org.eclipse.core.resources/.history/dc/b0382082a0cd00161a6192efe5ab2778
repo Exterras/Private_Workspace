@@ -1,0 +1,53 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyMain {
+	
+	private static void tryCatch(int _heightString, int _heightInt){
+		try {
+			_heightInt = Integer.parseInt(_heightString);
+		} catch (Exception e) {
+			System.out.println("Height is only numbers not a character");
+			return;
+		}
+	}
+	
+	public static void main(String[] args) {
+		String[] names = {"A", "B", "C", "D", "E"};
+		String[] heights = {"180", "175", "167", "194", "172"};
+		
+		int highHeights = 0;
+		int lowHeights = 0;
+		int[] heightNumber = new int[heights.length];
+		
+		try {
+			highHeights = Integer.parseInt(heights[0]);
+			lowHeights = Integer.parseInt(heights[0]);
+		} catch (Exception e) {
+			System.out.println("Height is only numbers not a character");
+			return;
+		}
+		
+		FuzzyMain.tryCatch(heights[0], highHeights);
+		FuzzyMain.tryCatch(heights[0], lowHeights);
+		
+		for (int i = 0; i < heights.length; i++) {
+			try {
+				heightNumber[i] = Integer.parseInt(heights[i]);
+			} catch (Exception e) {
+				System.out.println("Height is only numbers not a character");
+				return;
+			}
+			
+			if (heightNumber[i] > highHeights) {
+				highHeights = heightNumber[i];
+			}
+			
+			if (heightNumber[i] < lowHeights) {
+				lowHeights = heightNumber[i];
+			}
+		}
+		
+		System.out.println("The Most Highest Height : " + highHeights);
+		System.out.println("The Most Lowest Height : " + lowHeights);
+	}
+}

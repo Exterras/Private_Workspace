@@ -1,0 +1,2 @@
+﻿  fault_check.c
+d:\workspace\c\vs_fault_detect_01\vs_fault_detect_01\fault_check.c : fatal error C1853: 'Debug\vs_fault_detect_01.pch' 미리 컴파일된 헤더 파일이 이전 버전의 컴파일러에서 만들어졌거나, 미리 컴파일된 헤더가 C++인데 C에서 사용하고 있거나 또는 그 반대의 경우입니다.

@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1491297672 source:d:\workspace\c\fault_detection_03\fault_check.c
+	<stdio.h>
+	<stdbool.h>
+
+1491297594 source:d:\workspace\c\fault_detection_03\filemanager.c
+	<stdio.h>
+	<stdlib.h>
+
+1491298321 source:d:\workspace\c\fault_detection_03\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"fileManager.h"
+	"fault_check.h"
+
+1491290019 d:\workspace\c\fault_detection_03\filemanager.h
+
+1490958361 d:\workspace\c\fault_detection_03\fault_check.h
+

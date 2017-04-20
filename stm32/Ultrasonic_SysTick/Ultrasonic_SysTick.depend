@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1488801912 source:d:\workspace\stm32\ultrasonic_systick\src\startup_stm32f10x_md.s
+
+1488801912 source:d:\workspace\stm32\ultrasonic_systick\src\system_stm32f10x.c
+	"stm32f10x.h"
+
+1488801912 d:\workspace\stm32\ultrasonic_systick\inc\stm32f10x.h
+	"core_cm3.h"
+	"system_stm32f10x.h"
+	<stdint.h>
+	"stm32f10x_conf.h"
+
+1488801912 d:\workspace\stm32\ultrasonic_systick\cmsis\core_cm3.h
+	<stdint.h>
+	<core_cmInstr.h>
+	<core_cmFunc.h>
+
+1488801912 d:\workspace\stm32\ultrasonic_systick\cmsis\core_cminstr.h
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+
+1488801912 d:\workspace\stm32\ultrasonic_systick\cmsis\core_cmfunc.h
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+
+1488801912 d:\workspace\stm32\ultrasonic_systick\inc\system_stm32f10x.h
+

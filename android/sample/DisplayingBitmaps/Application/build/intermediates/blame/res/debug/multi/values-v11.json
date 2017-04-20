@@ -1,0 +1,474 @@
+[
+    {
+        "outputFile": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\res\\merged\\debug\\values-v11\\values-v11.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 6,
+                    "endColumn": 12,
+                    "endOffset": 351
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\src\\main\\res\\values-v11\\styles.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 663,
+                        "endLine": 23,
+                        "endColumn": 12,
+                        "endOffset": 959
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 356,
+                    "endColumn": 43,
+                    "endOffset": 395
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\src\\main\\res\\values-v11\\styles.xml",
+                    "position": {
+                        "startLine": 25,
+                        "startColumn": 4,
+                        "startOffset": 965,
+                        "endColumn": 44,
+                        "endOffset": 1005
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 400,
+                    "endLine": 13,
+                    "endColumn": 12,
+                    "endOffset": 814
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endLine": 7,
+                        "endColumn": 12,
+                        "endOffset": 469
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 819,
+                    "endLine": 19,
+                    "endColumn": 12,
+                    "endOffset": 1239
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 474,
+                        "endLine": 13,
+                        "endColumn": 12,
+                        "endOffset": 894
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 1244,
+                    "endLine": 25,
+                    "endColumn": 12,
+                    "endOffset": 1667
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 899,
+                        "endLine": 19,
+                        "endColumn": 12,
+                        "endOffset": 1322
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 1672,
+                    "endLine": 31,
+                    "endColumn": 12,
+                    "endOffset": 2093
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 1327,
+                        "endLine": 25,
+                        "endColumn": 12,
+                        "endOffset": 1748
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 2098,
+                    "endLine": 37,
+                    "endColumn": 12,
+                    "endOffset": 2520
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 1753,
+                        "endLine": 31,
+                        "endColumn": 12,
+                        "endOffset": 2175
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 38,
+                    "startColumn": 4,
+                    "startOffset": 2525,
+                    "endLine": 43,
+                    "endColumn": 12,
+                    "endOffset": 2945
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 32,
+                        "startColumn": 4,
+                        "startOffset": 2180,
+                        "endLine": 37,
+                        "endColumn": 12,
+                        "endOffset": 2600
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 2950,
+                    "endColumn": 88,
+                    "endOffset": 3034
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 38,
+                        "startColumn": 4,
+                        "startOffset": 2605,
+                        "endColumn": 88,
+                        "endOffset": 2689
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 45,
+                    "startColumn": 4,
+                    "startOffset": 3039,
+                    "endColumn": 100,
+                    "endOffset": 3135
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 39,
+                        "startColumn": 4,
+                        "startOffset": 2694,
+                        "endColumn": 100,
+                        "endOffset": 2790
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 46,
+                    "startColumn": 4,
+                    "startOffset": 3140,
+                    "endColumn": 102,
+                    "endOffset": 3238
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 40,
+                        "startColumn": 4,
+                        "startOffset": 2795,
+                        "endColumn": 102,
+                        "endOffset": 2893
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 47,
+                    "startColumn": 4,
+                    "startOffset": 3243,
+                    "endLine": 51,
+                    "endColumn": 12,
+                    "endOffset": 3646
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 41,
+                        "startColumn": 4,
+                        "startOffset": 2898,
+                        "endLine": 45,
+                        "endColumn": 12,
+                        "endOffset": 3301
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 52,
+                    "startColumn": 4,
+                    "startOffset": 3651,
+                    "endLine": 56,
+                    "endColumn": 12,
+                    "endOffset": 4066
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 46,
+                        "startColumn": 4,
+                        "startOffset": 3306,
+                        "endLine": 50,
+                        "endColumn": 12,
+                        "endOffset": 3721
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 57,
+                    "startColumn": 4,
+                    "startOffset": 4071,
+                    "endLine": 61,
+                    "endColumn": 12,
+                    "endOffset": 4488
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 51,
+                        "startColumn": 4,
+                        "startOffset": 3726,
+                        "endLine": 55,
+                        "endColumn": 12,
+                        "endOffset": 4143
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 62,
+                    "startColumn": 4,
+                    "startOffset": 4493,
+                    "endLine": 63,
+                    "endColumn": 12,
+                    "endOffset": 4595
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 56,
+                        "startColumn": 4,
+                        "startOffset": 4148,
+                        "endLine": 57,
+                        "endColumn": 12,
+                        "endOffset": 4250
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 64,
+                    "startColumn": 4,
+                    "startOffset": 4600,
+                    "endLine": 65,
+                    "endColumn": 12,
+                    "endOffset": 4724
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 58,
+                        "startColumn": 4,
+                        "startOffset": 4255,
+                        "endLine": 59,
+                        "endColumn": 12,
+                        "endOffset": 4379
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 66,
+                    "startColumn": 4,
+                    "startOffset": 4729,
+                    "endColumn": 70,
+                    "endOffset": 4795
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 60,
+                        "startColumn": 4,
+                        "startOffset": 4384,
+                        "endColumn": 70,
+                        "endOffset": 4450
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 67,
+                    "startColumn": 4,
+                    "startOffset": 4800,
+                    "endColumn": 82,
+                    "endOffset": 4878
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 61,
+                        "startColumn": 4,
+                        "startOffset": 4455,
+                        "endColumn": 82,
+                        "endOffset": 4533
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 68,
+                    "startColumn": 4,
+                    "startOffset": 4883,
+                    "endLine": 116,
+                    "endColumn": 12,
+                    "endOffset": 8493
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 62,
+                        "startColumn": 4,
+                        "startOffset": 4538,
+                        "endLine": 110,
+                        "endColumn": 12,
+                        "endOffset": 8148
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 117,
+                    "startColumn": 4,
+                    "startOffset": 8498,
+                    "endLine": 166,
+                    "endColumn": 12,
+                    "endOffset": 12248
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 111,
+                        "startColumn": 4,
+                        "startOffset": 8153,
+                        "endLine": 160,
+                        "endColumn": 12,
+                        "endOffset": 11903
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 167,
+                    "startColumn": 4,
+                    "startOffset": 12253,
+                    "endColumn": 90,
+                    "endOffset": 12339
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.1.1\\res\\values-v11\\values-v11.xml",
+                    "position": {
+                        "startLine": 161,
+                        "startColumn": 4,
+                        "startOffset": 11908,
+                        "endColumn": 90,
+                        "endOffset": 11994
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 168,
+                    "startColumn": 4,
+                    "startOffset": 12344,
+                    "endColumn": 64,
+                    "endOffset": 12404
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\src\\main\\res\\values-v11\\template-styles.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 650,
+                        "endColumn": 65,
+                        "endOffset": 711
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 169,
+                    "startColumn": 4,
+                    "startOffset": 12409,
+                    "endLine": 171,
+                    "endColumn": 12,
+                    "endOffset": 12564
+                },
+                "from": {
+                    "file": "D:\\workspace\\android\\sample\\DisplayingBitmaps\\Application\\src\\main\\res\\values-v11\\styles.xml",
+                    "position": {
+                        "startLine": 27,
+                        "startColumn": 4,
+                        "startOffset": 1011,
+                        "endLine": 29,
+                        "endColumn": 12,
+                        "endOffset": 1166
+                    }
+                }
+            }
+        ]
+    }
+]

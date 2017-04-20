@@ -1,0 +1,16 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyService {
+	
+	
+	
+	public void fuzzyService(){	
+		FuzzyDTO dto = new FuzzyDTO();
+		FuzzyDAO dao = new FuzzyDAO();
+		
+		dto.setNames(names);
+		dto.setHeights(heights);
+		
+		dao.fuzzyPercent();
+	}
+}

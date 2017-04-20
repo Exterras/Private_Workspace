@@ -1,0 +1,18 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyMain {
+	public static void main(String[] args) {
+		String[] names = {"A", "B", "C", "D", "E"};
+		String[] heights = {"180", "175", "167", "194", "172"};
+				
+		for (int i = 0; i < heights.length; i++) {
+			int highHeights = Integer.parseInt(heights[0]);
+			int[] heightNumber = new int[heights.length];
+			heightNumber = Integer.parseInt(heights[i]);
+			
+			if (heights[i] > highHeights) {
+				
+			}
+		}
+	}
+}

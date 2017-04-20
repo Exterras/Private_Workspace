@@ -1,0 +1,31 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyMain {
+	public static void main(String[] args) {
+		String[] names = {"A", "B", "C", "D", "E"};
+		String[] heights = {"180", "175", "167", "194", "172"};
+		
+		int highHeights = 0;	
+		int[] heightNumber = new int[heights.length];
+		
+		try {
+			highHeights = Integer.parseInt(heights[0]);	
+		} catch (Exception e) {
+			System.out.println("Height is only numbers not a character");
+		}
+		
+		for (int i = 0; i < heights.length; i++) {
+			try {
+				heightNumber[i] = Integer.parseInt(heights[i]);
+			} catch (Exception e) {
+				System.out.println("Height is only numbers not a character");
+			}
+			
+			if (heightNumber[i] > highHeights) {
+				highHeights = heightNumber[i];
+			}
+		}
+		
+		System.out.println(highHeights);
+	}
+}

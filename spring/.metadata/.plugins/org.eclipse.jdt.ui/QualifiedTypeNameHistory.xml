@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.github.exterras.Calculation"/>
+<fullyQualifiedTypeName name="com.github.exterras.ex02.Calculation"/>
+<fullyQualifiedTypeName name="com.github.exterras.ex02.Calculator"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="org.springframework.context.support.AbstractApplicationContext"/>
+<fullyQualifiedTypeName name="org.springframework.context.support.GenericXmlApplicationContext"/>
+<fullyQualifiedTypeName name="com.github.exterras.ex02.MyCalculator"/>
+</qualifiedTypeNameHistroy>

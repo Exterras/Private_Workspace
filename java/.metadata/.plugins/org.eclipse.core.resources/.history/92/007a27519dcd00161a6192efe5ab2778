@@ -1,0 +1,22 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyDAO {
+	private String[] names = 
+		{"A", "B", "C", "D", "E"};
+	private String[] heights = 
+		{"180", "175", "167", "194", "172"};
+	
+	public FuzzyDAO(){
+		fuzzyPercent();
+	}
+	
+	public void fuzzyPercent(){
+		FuzzyDTO dto = new FuzzyDTO();
+		
+		dto.setNames(names);
+		dto.setHeights(heights);
+	
+		System.out.println(dto.getNames());
+		System.out.println(dto.getHeights());
+	}
+}

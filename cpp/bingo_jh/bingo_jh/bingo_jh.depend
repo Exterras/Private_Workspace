@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1489302740 source:d:\workspace\cpp\bingo_jh\bingo_jh\main.cpp
+	"bingo_jh.h"
+
+1489155045 d:\workspace\cpp\bingo_jh\bingo_jh\header.h
+	<iostream>
+	<time.h>
+	<iomanip>
+	<windows.h>
+
+1489301970 d:\workspace\cpp\bingo_jh\bingo_jh\bingo_jh.h
+	<iostream>
+	<time.h>
+	<iomanip>
+	<windows.h>
+

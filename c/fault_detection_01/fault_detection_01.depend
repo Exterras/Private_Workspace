@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1490610799 source:d:\workspace\c\fault_detection_01\main.c
+	<stdio.h>
+	<stdlib.h>
+

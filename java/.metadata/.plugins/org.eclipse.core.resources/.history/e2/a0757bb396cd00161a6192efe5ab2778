@@ -1,0 +1,9 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyService {
+	
+	public void fuzzyService(){	
+		FuzzyDTO dto = new FuzzyDTO();
+		
+	}
+}

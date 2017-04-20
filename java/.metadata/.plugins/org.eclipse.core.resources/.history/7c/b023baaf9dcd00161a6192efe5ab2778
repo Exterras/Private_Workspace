@@ -1,0 +1,7 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyMain {
+	public static void main(String[] args) {
+		new FuzzyDAO();
+	}
+}

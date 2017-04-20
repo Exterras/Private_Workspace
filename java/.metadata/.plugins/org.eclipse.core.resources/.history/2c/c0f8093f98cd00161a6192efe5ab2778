@@ -1,0 +1,13 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyDAO {
+	private String[] names;
+	private String[] heights;
+	
+	FuzzyDTO dto = new FuzzyDTO();
+	
+	public void fuzzyPercent(){
+		names = dto.getNames();
+		heights = dto.getHeights();
+	}
+}

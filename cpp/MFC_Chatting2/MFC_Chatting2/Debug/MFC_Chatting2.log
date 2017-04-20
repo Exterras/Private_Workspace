@@ -1,0 +1,7 @@
+﻿  stdafx.cpp
+  MFC_Chatting2Dlg.cpp
+d:\workspace\cpp\mfc_chatting2\mfc_chatting2\mfc_chatting2dlg.cpp(215): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  MFC_Chatting2.cpp
+  코드를 생성하고 있습니다...
+  MFC_Chatting2.vcxproj -> D:\workspace\cpp\MFC_Chatting2\Debug\MFC_Chatting2.exe
+  MFC_Chatting2.vcxproj -> D:\workspace\cpp\MFC_Chatting2\Debug\MFC_Chatting2.pdb (Partial PDB)

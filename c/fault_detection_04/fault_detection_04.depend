@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1491806898 source:d:\exterra\powerit_workspace\c\fault_detection_04\main.c
+	<stdio.h>
+	<stdbool.h>
+	<stdlib.h>
+	<string.h>
+

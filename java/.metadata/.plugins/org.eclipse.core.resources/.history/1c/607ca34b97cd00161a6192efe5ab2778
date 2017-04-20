@@ -1,0 +1,15 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyService {
+	
+	private String[] names = 
+		{"A", "B", "C", "D", "E"};
+	private String[] heights = 
+		{"180", "175", "167", "194", "172"};
+	
+	public void fuzzyService(){	
+		FuzzyDTO dto = new FuzzyDTO();
+		dto.setNames(names);
+		dto.setHeights(heights);
+	}
+}

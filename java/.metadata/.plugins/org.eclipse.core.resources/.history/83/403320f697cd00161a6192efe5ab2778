@@ -1,0 +1,9 @@
+package com.github.exteras.fuzzy;
+
+public class FuzzyMain {
+	FuzzyService service = new FuzzyService();
+	
+	public static void main(String[] args) {
+		
+	}
+}

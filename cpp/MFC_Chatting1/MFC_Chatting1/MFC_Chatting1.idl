@@ -1,0 +1,29 @@
+// MFC_Chatting1.idl : MFC_Chatting1.exe에 대한 형식 라이브러리 소스
+
+// 이 파일은 MIDL 컴파일러에 의해 처리되어
+// 형식 라이브러리(MFC_Chatting1.tlb)를 생성합니다.
+
+[ uuid(8E4A07E3-80F3-4605-BE15-0D7232C5B8EF), version(1.0) ]
+library MFC_Chatting1
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	//  CMFC_Chatting1Doc의 기본 디스패치 인터페이스
+	
+	[ uuid(60F06000-353E-48FB-A96D-BE953EBB271C) ]
+	dispinterface IMFC_Chatting1
+	{
+		properties:
+			
+		methods:
+	};
+
+	//  CMFC_Chatting1Doc의 클래스 정보
+	
+	[ uuid(7ED26032-BF0A-41A8-9ADA-806ED20D5F4A) ]
+	coclass MFC_Chatting1
+	{
+		[default] dispinterface IMFC_Chatting1;
+	};
+};

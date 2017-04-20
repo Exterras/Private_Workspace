@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.github.exterras.exam01.Star"/>
+<fullyQualifiedTypeName name="java.lang.LinkageError"/>
+<fullyQualifiedTypeName name="java.awt.Toolkit"/>
+<fullyQualifiedTypeName name="java.lang.Runnable"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.BeepPrintExample2"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.BeepPrintExample1"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.BeepThread"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.ThreadA"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.calcThread"/>
+<fullyQualifiedTypeName name="java.lang.InterruptedException"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.Calculator"/>
+<fullyQualifiedTypeName name="com.example.exterras.chap12.User1"/>
+<fullyQualifiedTypeName name="test.RandomTenOut"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.C2"/>
+<fullyQualifiedTypeName name="java.lang.Class"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.Da"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.Db"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.D2"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.Ad1"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.Ad2"/>
+<fullyQualifiedTypeName name="com.github.exterras.practice01.An"/>
+<fullyQualifiedTypeName name="java.text.DecimalFormat"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="com.github.exterras.fuzzy02.FuzzyExceptions"/>
+<fullyQualifiedTypeName name="com.github.exterras.dbconn.DBdata"/>
+<fullyQualifiedTypeName name="com.github.exterras.dbconn.DBConn"/>
+<fullyQualifiedTypeName name="com.mysql.jdbc.ResultSetMetaData"/>
+<fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
+<fullyQualifiedTypeName name="com.github.exterras.fuzzy02.DBConnSelect"/>
+<fullyQualifiedTypeName name="sun.applet.Main"/>
+<fullyQualifiedTypeName name="test.ArrayListTest"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="com.github.exterras.dbconn.MysqlDB"/>
+<fullyQualifiedTypeName name="com.github.exterras.fuzzy02.FuzzyDTO"/>
+<fullyQualifiedTypeName name="org.jfree.ui.RefineryUtilities"/>
+<fullyQualifiedTypeName name="com.github.exterras.fuzzy02.XYLineChart_AWT"/>
+<fullyQualifiedTypeName name="javax.swing.plaf.synth.SynthSeparatorUI"/>
+<fullyQualifiedTypeName name="com.github.exterras.fuzzy02.FuzzyDAO"/>
+<fullyQualifiedTypeName name="java.lang.NumberFormatException"/>
+</qualifiedTypeNameHistroy>
