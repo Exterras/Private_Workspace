@@ -58,6 +58,7 @@ CMFC_Notepad3Dlg::CMFC_Notepad3Dlg(CWnd* pParent /*=NULL*/)
 void CMFC_Notepad3Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT1, m_strName);
 }
 
 BEGIN_MESSAGE_MAP(CMFC_Notepad3Dlg, CDialogEx)
@@ -103,6 +104,9 @@ BOOL CMFC_Notepad3Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	
+	// 제목 변경
+	SetWindowText(_T("20165240_최태일_메모장"));
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -160,19 +164,27 @@ HCURSOR CMFC_Notepad3Dlg::OnQueryDragIcon()
 
 void CMFC_Notepad3Dlg::OnOpen()
 {
-	CStdioFile f;
-	CString tmpTxt, strTxt;
-
+	CStdioFile f; // 텍스트 속성의 파일을 손쉽게 처리할수 있도록 제공되는 클래스입니다.
+	CString display_str, str; // 텍스트를 출력할 변수
+	
+	// 파일 지정자 및 파일 열기 대화상자 
 	TCHAR fileFilter[] = _T("텍스트 파일(*.txt)");
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY, fileFilter);
 
+	// 다이얼로그 종료시 반환되는 값을 검사
 	if (dlg.DoModal() == IDOK)
 	{
 		if (f.Open(dlg.GetPathName(), CFile::modeRead | CFile::typeText))
 		{
 			// 정상적으로 읽어짐.
-			while (f.ReadString(tmpTxt)) strTxt += tmpTxt;
-			AfxMessageBox(strTxt);
+
+			// 파일을 String 타입으로 읽어서 display_str에 저장 
+			while (f.ReadString(str)) {
+				display_str += str;
+			}
+
+			// display_str을 IDC_EDIT1에 표시하기
+			SetDlgItemText(IDC_EDIT1, display_str);
 			f.Close(); // 파일 닫기
 		}
 	}
@@ -181,22 +193,7 @@ void CMFC_Notepad3Dlg::OnOpen()
 
 void CMFC_Notepad3Dlg::OnSave()
 {
-	/*
-	CString strMsg;
-	TCHAR fileFilter[] = _T("텍스트 파일(*.txt)");
-	CFileDialog dlg(FALSE, NULL, NULL, OFN_HIDEREADONLY, fileFilter);
-
-	if (dlg.DoModal() == IDOK)
-	{
-		strMsg.Format(_T("파일이름:%s\n파일확장자:%s\n파일타이틀:%s\n파일경로:%s"),
-			dlg.GetFileName(), dlg.GetFileExt(),
-			dlg.GetFileTitle(), dlg.GetFolderPath());
-
-		AfxMessageBox(strMsg);
-	}
-	*/
-
-	
+	CString str;
 	CStdioFile file;
 	CFileException ex;
 	TCHAR fileExt[] = _T(".txt");
@@ -204,12 +201,14 @@ void CMFC_Notepad3Dlg::OnSave()
 	CFileDialog dlg(FALSE, fileExt, NULL, OFN_HIDEREADONLY, fileFilter);
 	if (dlg.DoModal() == IDOK)
 	{
-		// 입력 컨트롤에 쓰여져 있는 내용을 어떻게 불러들이지?
 		file.Open(dlg.GetPathName(), CFile::modeCreate | CFile::modeReadWrite, &ex);
-		UpdateData(TRUE);
+	
+		GetDlgItemText(IDC_EDIT1, str); // IDC_EDIT1의 내용을 str로 저장
+		file.WriteString(str); // str의 내용을 텍스트 클래스로 쓰기
+		
+		UpdateData(TRUE); // 업데이트
 		file.Close();
 	}
-	
 }
 
 

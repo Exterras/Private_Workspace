@@ -59,4 +59,5 @@ public:
 	afx_msg void OnBnClickedRect();
 	afx_msg void OnBnClickedLine();
 	afx_msg void OnBnClickedCircle();
+	afx_msg void OnBnClickedColorpic();
 };

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "afxwin.h"
 
 
 // CMFC_Notepad3Dlg 대화 상자
@@ -36,4 +37,5 @@ public:
 	afx_msg void OnSave();
 	afx_msg void OnPrint();
 	afx_msg void OnQuit();
+	CEdit m_strName;
 };

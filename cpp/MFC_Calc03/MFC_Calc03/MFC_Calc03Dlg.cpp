@@ -56,6 +56,9 @@ BOOL CMFC_Calc03Dlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 
+	// 제목 변경
+	SetWindowText(_T("20165240_최태일_계산기"));
+
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 

@@ -89,6 +89,7 @@ BEGIN_MESSAGE_MAP(CMFC_Paint3Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RECT, &CMFC_Paint3Dlg::OnBnClickedRect)
 	ON_BN_CLICKED(IDC_LINE, &CMFC_Paint3Dlg::OnBnClickedLine)
 	ON_BN_CLICKED(IDC_CIRCLE, &CMFC_Paint3Dlg::OnBnClickedCircle)
+	ON_BN_CLICKED(IDC_COLORPIC, &CMFC_Paint3Dlg::OnBnClickedColorpic)
 END_MESSAGE_MAP()
 
 
@@ -353,7 +354,16 @@ void CMFC_Paint3Dlg::OnBnClickedRect()
 	toolFlag = 2;
 }
 
-
-
-
-
+void CMFC_Paint3Dlg::OnBnClickedColorpic()
+{
+	CColorDialog colorDlg;
+	if (colorDlg.DoModal() == IDOK)
+	{
+		COLORREF color = colorDlg.GetColor();
+		CString strTmp;
+		
+		nRed = GetRValue(color);
+		nGreen = GetGValue(color);
+		nBlue = GetBValue(color);
+	}
+}

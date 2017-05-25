@@ -4,14 +4,47 @@
 #include <string.h>
 #include <time.h>
 
+// 전류 관련 정의
 #define CUR_NUM 3
 #define TXT_LEN 10
-#define FUZZY_DATALEN 10
 
+// 고장으로 판별할 수 있는 전류 급상승 갯수 정의
+#define A_FAULT_CNT 10
+#define B_FAULT_CNT 10
+#define C_FAULT_CNT 10
+
+// 고장으로 판별할 수 있는 전류 급상승 비율 정의
+#define A_INC_PER 10.0
+#define B_INC_PER 10.0
+#define C_INC_PER 10.0
+
+// 전류 배열 번호 정의
+#define A_ARR_NUM 0
+#define B_ARR_NUM 1
+#define C_ARR_NUM 2
+
+// 위상 배열 번호 정의 (0, 45, 90)
+#define DEG_ZERO 0
+#define DEG_HALF 1
+#define DEG_ANGLE 2
+
+// 기존의 고장분류 방법
 #define NORMAL 0
 #define FAULT_A 10
 #define FAULT_B 11
 #define FAULT_C 12
+
+// 퍼지를 이용한 방법
+#define INCREASE_HIGHER 10
+#define SLIGHTLY_HIGHER 11
+#define HIGH 12
+#define VERY_HIGH 13
+
+// 퍼지 비율 정의
+#define PERCENT 100
+#define AVGRANGE 0.5
+#define LOWZERO 0.5
+#define HIGHZERO 1.0
 
 typedef struct faultChkValue {
    char *curName;
@@ -27,13 +60,16 @@ typedef struct faultChkValue {
 // 정의 : 각 위상의 최대 전류값
 // 20170410 4.0 version 부터 이 값을 주목하자
 // 각 위상의 최대 전류값을 저장하여 3상의 값과 비교하여 가장 작은 값으로 고장판별을 할 기준으로 제공
+int fuzzyFault[CUR_NUM];
 double highCur;
-double minFaultArr[CUR_NUM];
 
 void fault_detection(int _a, int _b, int _c);
+
+// 각 전류별로 고장판별에 대한 함수를 만들고 오류가 발생시 해당 코드를 내보낸다.
 int fault_A(int _faultChkTimes, double _incPercent);
 int fault_B(int _faultChkTimes, double _incPercent);
 int fault_C(int _faultChkTimes, double _incPercent);
+
 bool input_data(chk _current, char* _data, int _curLen, int _faultChkTimes, double _incPercent);
 
 int file_open(char* _fileName);
@@ -42,29 +78,24 @@ int fault_check(int _cnt, int _faultChkTimes, double _incPercent, double* _curDa
 int open_HigherFromMinFault(double *_curData, int _arrLen, double _minFault);
 double* save_HigherFromMinFault(char *_data, int _arrLen, double _minFault);
 
-double* bubbleSortArr(int _numLength, double _num_High, double _num_Low, double *_num);
-void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double _num_LowZero, double _num_HighZero);
+int fuzzyOn(char *_curName, double *_num, int _numLength, int _degree, double _avgRate, double _num_LowZero, double _num_HighZero);
 void fuzzyPrint(char* _str, double* _arrFuzzyValue, int _numLength, int _line); // fuzzy print function
+void fault_detection_inFuzzy(int _a, int _b, int _c);
 
 int main()
 {
-    // int _faultChkTimes, double _incPercent
-    // 각 전류별로 고장판별에 대한 함수를 만들고 오류가 발생시 해당 코드를 내보낸다.
-    // 고장코드 => A 고장 : 10, B 고장 : 11, C 고장 : 12, 정상 : 0
+    int faultCnt[CUR_NUM] = {A_FAULT_CNT, B_FAULT_CNT, C_FAULT_CNT}; // 전류값이 해당 갯수 이상 급상승 시 고장이라고 판별해주는 기준,  A->B->C 순서
+    double incPercent[CUR_NUM] = {A_INC_PER, B_INC_PER, C_INC_PER}; // 다음 전류값이 일정 비율 이상 급상승 시 고장이라고 판별해주는 기준,  A->B->C 순서
 
-    // 전류값이 해당 갯수 이상 급상승 시 고장이라고 판별해주는 기준,  A->B->C 순서
-    // 다음 전류값이 일정 비율 이상 급상승 시 고장이라고 판별해주는 기준,  A->B->C 순서
-    int faultCnt[CUR_NUM] = {10, 10, 10};
-    double incPercent[CUR_NUM] = {10.0, 10.0, 10.0};
-
+    // 각 위상값들을 모아 전류의 고장을 판별하는 함수
     // side effect 방지 코드, 함수안에 함수중첩을 가능한 피하자, 순서가 반대로 되는 것을 막아줌
-    int fault_code[CUR_NUM] = {fault_A(faultCnt[0], incPercent[0]), fault_B(faultCnt[1], incPercent[1]), fault_C(faultCnt[2], incPercent[2])};
+    int fault_code[CUR_NUM] = { fault_A(faultCnt[A_ARR_NUM], incPercent[A_ARR_NUM]),
+                                fault_B(faultCnt[B_ARR_NUM], incPercent[B_ARR_NUM]),
+                                fault_C(faultCnt[C_ARR_NUM], incPercent[C_ARR_NUM])};
 
-    // 여기서 각 전류별로 최소 고장값이 밝혀지므로 이 부분에 퍼지를 삽입
-    // minFaultArr[0] = A, minFaultArr[1] = B, minFaultArr[2] = C;
-
-    // 실행 함수
-    fault_detection(fault_code[0], fault_code[1], fault_code[2]);
+    // 실행 함수 (윗 : 각 상의 결과를 퍼지화하여 위험도를 알려줌, 아래: 최종적으로 어느 결과를 출력할 것이지를 알려줌)
+    fault_detection_inFuzzy(fuzzyFault[A_ARR_NUM], fuzzyFault[B_ARR_NUM], fuzzyFault[C_ARR_NUM]);
+    fault_detection(fault_code[A_ARR_NUM], fault_code[B_ARR_NUM], fault_code[C_ARR_NUM]);
 
     return 0;
 }
@@ -73,6 +104,7 @@ int main()
 void fault_detection(int _a, int _b, int _c) {
 
     // 3상의 전류를 파악하여 고장 여부를 판별하기 위해 고장코드를 합산한다.
+    // 고장코드 => A 고장 : 10, B 고장 : 11, C 고장 : 12, 정상 : 0
     int result  = _a + _b + _c;
 
     // 고장 코드를 출력하는 문이다. 0x is nothing.. just look..
@@ -111,6 +143,56 @@ void fault_detection(int _a, int _b, int _c) {
 
     printf("\n"); // carriage return
 }
+
+// 각각의 상의 퍼지결과를 매개변수로 받아서 두 개 이상의 상의 퍼지화를 나타낸 함수
+void fault_detection_inFuzzy(int _a, int _b, int _c){
+
+    // 각 상의 퍼지결과를 별도의 변수로 만들어 저장함
+    int a = _a;
+    int b = _b;
+    int c = _c;
+    int ab = a+b;
+    int bc = b+c;
+    int ac = a+c;
+    int abc = a+b+c;
+
+    // 퍼지 알림코드
+    char* errorArr[] = {"Increasing Higher", "Slightly Higher", "is High", "is Very High"};
+
+    // 2개의 상의 결과가 일정 위험수준 사이에 있는다면
+    // 그 결과의 십의 자리수를 빼고 상의 갯수만큼 나눗셈을 한다.
+    // 그 수를 다시 상의 결과변수에 넣어 해당하는 퍼지 알림코드를 제공한다.
+    if (ab >= (INCREASE_HIGHER*2) && ab <= (VERY_HIGH*2)){
+        ab = (ab-20) / 2;
+        printf("Current AB's Danger %s", errorArr[ab]);
+    } else {
+        printf("Current AB's Danger is Not Detected");
+    } printf("\n");
+
+    if (bc >= (INCREASE_HIGHER*2) && bc <= (VERY_HIGH*2)){
+        bc = (bc-20) / 2;
+        printf("Current BC's Danger %s", errorArr[bc]);
+    } else {
+        printf("Current BC's Danger is Not Detected");
+    } printf("\n");
+
+    if (ac >= (INCREASE_HIGHER*2) && ac <= (VERY_HIGH*2)){
+        ac = (ac-20) / 2;
+        printf("Current AC's Danger %s", errorArr[ac]);
+    } else {
+        printf("Current AC's Danger is Not Detected");
+    } printf("\n");
+
+    if (abc >= (INCREASE_HIGHER*3) && abc <= (VERY_HIGH*3)){
+        abc = (abc-30) / 3;
+        printf("Current ABC's Danger %s", errorArr[abc]);
+    } else {
+        printf("Current ABC's Danger is Not Detected");
+    } printf("\n");
+
+    printf("\n");
+}
+
 // 각 위상값들을 모아 전류의 고장을 판별하는 함수
 // 퍼지 넣을 부분 fault_A, fault_B, fault_C
 int fault_A(int _faultChkTimes, double _incPercent){
@@ -153,22 +235,56 @@ int fault_A(int _faultChkTimes, double _incPercent){
         }
     }
 
-    double *faultDataArr_0 = save_HigherFromMinFault(cur_A_txt[0], file_open(cur_A_txt[0]), minFault);
-    double *faultDataArr_45 = save_HigherFromMinFault(cur_A_txt[1], file_open(cur_A_txt[1]), minFault);
-    double *faultDataArr_90 = save_HigherFromMinFault(cur_A_txt[2], file_open(cur_A_txt[2]), minFault);
+    // 각 위상값별로 최소 고장값의 갯수를 구하는 구문, 0도과 45도는
+    // 각 위상값별로 최소 고장값의 갯수의 합을 구하여 다음 구문에 활용한다.
+    int faultDataCnt = 0;
+    int faultDataCnt_0 = open_HigherFromMinFault(file_save(cur_A_txt[DEG_ZERO]), file_open(cur_A_txt[DEG_ZERO]), minFault);
+    int faultDataCnt_45 = open_HigherFromMinFault(file_save(cur_A_txt[DEG_HALF]), file_open(cur_A_txt[DEG_HALF]), minFault);
+    for(i=0; i<CUR_NUM; i++){
+        faultDataCnt += open_HigherFromMinFault(file_save(cur_A_txt[i]), file_open(cur_A_txt[i]), minFault);
+    }
 
-    // int _numLength = open_HigherFromMinFault()
-    // int _num_High = int _num_Low = 배열[0]번째 값으로 초기화
-    int cnt_0 = open_HigherFromMinFault(file_save(cur_A_txt[0]), file_open(cur_A_txt[0]), minFault);
-    int cnt_45 = open_HigherFromMinFault(file_save(cur_A_txt[1]), file_open(cur_A_txt[1]), minFault);
-    int cnt_90 = open_HigherFromMinFault(file_save(cur_A_txt[2]), file_open(cur_A_txt[2]), minFault);
+    // 각 위상값별로 최소 고장값을 저장하는 구문,
+    double *faultDataArr_0 = save_HigherFromMinFault(cur_A_txt[DEG_ZERO], file_open(cur_A_txt[DEG_ZERO]), minFault);
+    double *faultDataArr_45 = save_HigherFromMinFault(cur_A_txt[DEG_HALF], file_open(cur_A_txt[DEG_HALF]), minFault);
+    double *faultDataArr_90 = save_HigherFromMinFault(cur_A_txt[DEG_ANGLE], file_open(cur_A_txt[DEG_ANGLE]), minFault);
 
-    faultDataArr_0 = bubbleSortArr(cnt_0, faultDataArr_0[0], faultDataArr_0[0], faultDataArr_0);
-    faultDataArr_45 = bubbleSortArr(cnt_45, faultDataArr_45[0], faultDataArr_45[0], faultDataArr_45);
-    faultDataArr_90 = bubbleSortArr(cnt_90, faultDataArr_90[0], faultDataArr_90[0], faultDataArr_90);
+    // 각 위상값의 최소 고장값들을 모아서 각 상(전류)의 고장값으로 재배치
+    // 앞서 만든 각 위상값별로 최소 고장값의 갯수의 합만큼 배열을 생성해 이것을 포인트 변수로 정의하였다.
+    double *faultDataArr = (double*)malloc(sizeof(double)*faultDataCnt);
 
-    minFaultArr[0] = minFault; // minFault 외부로 빼내기
+    // 임시변수
+    int t1 = 0;
+    int t2 = 0;
+    int t3 = 0;
+
+    // faultDataArr_0, faultDataArr_45, faultDataArr_90 포인터변수를 하나의 포인터변수(faultDataArr)로 합치는 과정이다.
+    // 이 합친 데이터를 바탕으로 자료의 퍼지화를 제작한다.
+    for(i=0; i<faultDataCnt; i++){
+        if(i < faultDataCnt_0){
+            faultDataArr[i] = faultDataArr_0[t1];
+            t1++;
+        } else if(i >= faultDataCnt_0 && i < (faultDataCnt_0+faultDataCnt_45) ){
+            faultDataArr[i] = faultDataArr_45[t2];
+            t2++;
+        } else if(i >= (faultDataCnt_0+faultDataCnt_45) ){
+            faultDataArr[i] = faultDataArr_90[t3];
+            t3++;;
+        }
+    }
+    /* // test
+    for(i=0; i<faultDataCnt; i++){
+        printf("%.10lf\n", faultDataArr[i]);
+    }
+    */
+
+    // 전류이름, 전류데이터, 전류데이터의 갯수, 퍼지눈금(백분율), 평균집단 시작과 끝을 지정해줄 비율 (Low 와 High 정도로 각각 시작과 끝을 정한다), Low0.0의 데이터, HIGH0.0의 데이터
+    // 퍼지화한 함수에서 퍼지코드를 fuzzyFault 배열변수에 저장한다.
+    fuzzyFault[0] = fuzzyOn("Current A", faultDataArr, faultDataCnt, PERCENT, AVGRANGE, LOWZERO, HIGHZERO);
+
+    // 자신의 전류에서 고장이 났는지 않났는지 확인해주는 장치이다. 종래의 방법으로 실행된다.
     return fault;
+
     // fault_B, C는 A와 동일한 구조로 가짐
 }
 
@@ -201,8 +317,36 @@ int fault_B(int _faultChkTimes, double _incPercent){
             fault = FAULT_B;
         }
     }
-    minFaultArr[1] = minFault; // minFault 외부로 빼내기
 
+    int faultDataCnt = 0;
+    int faultDataCnt_0 = open_HigherFromMinFault(file_save(cur_B_txt[DEG_ZERO]), file_open(cur_B_txt[DEG_ZERO]), minFault);
+    int faultDataCnt_45 = open_HigherFromMinFault(file_save(cur_B_txt[DEG_HALF]), file_open(cur_B_txt[DEG_HALF]), minFault);
+    for(i=0; i<CUR_NUM; i++){
+        faultDataCnt += open_HigherFromMinFault(file_save(cur_B_txt[i]), file_open(cur_B_txt[i]), minFault);
+    }
+
+    double *faultDataArr_0 = save_HigherFromMinFault(cur_B_txt[DEG_ZERO], file_open(cur_B_txt[DEG_ZERO]), minFault);
+    double *faultDataArr_45 = save_HigherFromMinFault(cur_B_txt[DEG_HALF], file_open(cur_B_txt[DEG_HALF]), minFault);
+    double *faultDataArr_90 = save_HigherFromMinFault(cur_B_txt[DEG_ANGLE], file_open(cur_B_txt[DEG_ANGLE]), minFault);
+
+    double *faultDataArr = (double*)malloc(sizeof(double)*faultDataCnt);
+    int t1 = 0;
+    int t2 = 0;
+    int t3 = 0;
+    for(i=0; i<faultDataCnt; i++){
+        if(i < faultDataCnt_0){
+            faultDataArr[i] = faultDataArr_0[t1];
+            t1++;
+        } else if(i >= faultDataCnt_0 && i < (faultDataCnt_0+faultDataCnt_45) ){
+            faultDataArr[i] = faultDataArr_45[t2];
+            t2++;
+        } else if(i >= (faultDataCnt_0+faultDataCnt_45) ){
+            faultDataArr[i] = faultDataArr_90[t3];
+            t3++;;
+        }
+    }
+    fuzzyFault[1] = fuzzyOn("Current B", faultDataArr, faultDataCnt, PERCENT, AVGRANGE, LOWZERO, HIGHZERO);
+    // minFaultArr[1] = minFault; // minFault 외부로 빼내기
     return fault;
 }
 
@@ -236,8 +380,35 @@ int fault_C(int _faultChkTimes, double _incPercent){
             fault = FAULT_C;
         }
     }
-    minFaultArr[2] = minFault; // minFault 외부로 빼내기
 
+    int faultDataCnt = 0;
+    int faultDataCnt_0 = open_HigherFromMinFault(file_save(cur_C_txt[DEG_ZERO]), file_open(cur_C_txt[DEG_ZERO]), minFault);
+    int faultDataCnt_45 = open_HigherFromMinFault(file_save(cur_C_txt[DEG_HALF]), file_open(cur_C_txt[DEG_HALF]), minFault);
+    for(i=0; i<CUR_NUM; i++){
+        faultDataCnt += open_HigherFromMinFault(file_save(cur_C_txt[i]), file_open(cur_C_txt[i]), minFault);
+    }
+
+    double *faultDataArr_0 = save_HigherFromMinFault(cur_C_txt[DEG_ZERO], file_open(cur_C_txt[DEG_ZERO]), minFault);
+    double *faultDataArr_45 = save_HigherFromMinFault(cur_C_txt[DEG_HALF], file_open(cur_C_txt[DEG_HALF]), minFault);
+    double *faultDataArr_90 = save_HigherFromMinFault(cur_C_txt[DEG_ANGLE], file_open(cur_C_txt[DEG_ANGLE]), minFault);
+
+    double *faultDataArr = (double*)malloc(sizeof(double)*faultDataCnt);
+    int t1 = 0;
+    int t2 = 0;
+    int t3 = 0;
+    for(i=0; i<faultDataCnt; i++){
+        if(i < faultDataCnt_0){
+            faultDataArr[i] = faultDataArr_0[t1];
+            t1++;
+        } else if(i >= faultDataCnt_0 && i < (faultDataCnt_0+faultDataCnt_45) ){
+            faultDataArr[i] = faultDataArr_45[t2];
+            t2++;
+        } else if(i >= (faultDataCnt_0+faultDataCnt_45) ){
+            faultDataArr[i] = faultDataArr_90[t3];
+            t3++;;
+        }
+    }
+    fuzzyFault[2] = fuzzyOn("Current C", faultDataArr, faultDataCnt, PERCENT, AVGRANGE, LOWZERO, HIGHZERO);
     return fault;
 }
 
@@ -305,7 +476,6 @@ double* file_save(char *_fileName){
     fclose(fp);
 
     // 저장된 파일의 포인터를 리턴한다.
-    free(curData);
     return curData;
 }
 
@@ -325,7 +495,7 @@ int open_HigherFromMinFault(double *_curData, int _arrLen, double _minFault){
 }
 
 // minFault보다 큰 전류값들을 저장하는 함수, 반복횟수 : cntLen * CUR_NUM (101 * 3)
-// 저장된 배열의 포인터를 리턴한다. 이 값들은 각 전류들의 고장
+// 저장된 배열의 포인터를 리턴한다. 리턴되는 배열 값들은 각 전류들의 고장범위를 알려준다.
 double* save_HigherFromMinFault(char *_data, int _arrLen, double _minFault){
     int i, j = 0;
     int arrLen = _arrLen;
@@ -341,12 +511,11 @@ double* save_HigherFromMinFault(char *_data, int _arrLen, double _minFault){
             j++;
         }
     }
-    /* test
+    /*// test
     for(i=0; i<cnt; i++){
         printf("%.10lf\n", faultDataArr[i]);
     }
     */
-    free(faultDataArr);
     return faultDataArr;
 }
 
@@ -385,64 +554,15 @@ int fault_check(int _cnt, int _faultChkTimes, double _incPercent, double* _curDa
     return cnt;
 }
 
-// 20170419 5.0 버전에서 fuzzyOn에 쓰는 bubbleSort를 별도의 함수로 제작
-// 각 위상별 최소전류값보다 큰 데이터 집합들을 정렬하는 데도 쓰일 것이다.
-// int _numLength = open_HigherFromMinFault()
-// int _num_High = int _num_Low = 배열[0]번째 값으로 초기화
-double* bubbleSortArr(int _numLength, double _num_High, double _num_Low, double *_num){
-    int i, j = 0;
-    int numLength = _numLength;
-    double num_High = _num_High;
-    double num_Low = _num_Low;
-
-    double *num = _num;
-    double temp = 0.0;
-
-    // highest, lowest value
-    for(i = 0; i < numLength; i++){
-        if(num[i] > num_High){
-            num_High = num[i];
-        }
-        if(num[i] < num_Low){
-            num_Low = num[i];
-        }
-    }
-
-    // bubble sort
-    for (i = 0; i < numLength; i++) {
-        for (j = 0; j < numLength - 1; j++) {
-            if (num[j] > num[j+1]) {
-                temp = num[j];
-                num[j] = num[j+1];
-                num[j+1] = temp;
-            }
-        }
-    }
-
-    // after bubble sort (Ascending)
-    printf("after B.S. (Asc.):\t");
-    for(i = 0; i < numLength; i++){
-        printf("%.5lf ",num[i]);
-    }
-    printf("\n"); // carriage return
-
-    // after bubble sort (Descending)
-    //printf("after B.S. (Desc.):\t");
-    //for(i = numLength-1 ; i >= 0; i--){
-    //    printf("%.5lf ",num[i]);
-  //  }
-    printf("\n"); // carriage return
-
-    return num;
-}
-
-
+int fuzzyOn(char *_curName, double *_num, int _numLength, int _degree, double _avgRate, double _num_LowZero, double _num_HighZero){
 // function of bubble sort
-void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double _num_LowZero, double _num_HighZero){
     // general variables
-    int i; // bubble sort and iteration variables
+    char *curName = _curName;
+    int i, j = 0; // bubble sort and iteration variables
+    int errorCode = 0; // normal:0, I.High:10, S.High:11, High:12, Very High:13
+    double temp = 0.0;
     double *num = _num; // array parameter to pointer variable
-    double sum_Entire= 0; // array's sum
+    double sum_Entire = 0; // array's sum
     double avg_Entire = 0.0; // array's avg
     double avgRate = _avgRate; // low and high rate = average's start and end point
 
@@ -472,29 +592,68 @@ void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double 
 
     // fuzzy array variables
     double arr_FuzzyLow[numLength];
-    double arr_FuzzHigh[numLength];
+    double arr_FuzzyHigh[numLength];
     double arr_FuzzyLowToAvg[numLength];
     double arr_FuzzyAvgToHigh[numLength];
 
+    /*
     // before bubble sort, initialize value
     printf("initialize value :\t");
     for(i = 0; i < numLength; i++){
-        printf("%.5lf ",num[i]);
+        printf("%d ",num[i]);
     }
     printf("\n");
+    */
 
-    // high, low initiation and bubblesort function execution
-    num_High = num_Low = num[0];
-    num = bubbleSortArr(numLength, num_High, num_Low, num);
+
+    /* ----- bubble sort, maxvalue, minvalue, avgvalue -----*/
+
+    // highest, lowest value
+    num_High = num[0];
+    num_Low = num[0];
+    for(i = 0; i < numLength; i++){
+        if(num[i] > num_High){
+            num_High = num[i];
+        }
+        if(num[i] < num_Low){
+            num_Low = num[i];
+        }
+    }
+
+    // bubble sort
+    for (i = 0; i < numLength; i++) {
+        for (j = 0; j < numLength - 1; j++) {
+            if (num[j] > num[j+1]) {
+                temp = num[j];
+                num[j] = num[j+1];
+                num[j+1] = temp;
+            }
+        }
+    }
+
+    /*
+    // after bubble sort (Ascending)
+    printf("after B.S. (Asc.):\t");
+    for(i = 0; i < numLength; i++){
+        printf("%d ",num[i]);
+    }
+    printf("\n"); // carriage return
+
+    // after bubble sort (Descending)
+    printf("after B.S. (Desc.):\t");
+    for(i = numLength-1 ; i >= 0; i--){
+        printf("%d ",num[i]);
+    }
+    printf("\n"); // carriage return
+    */
 
     // num[]'s sum and average
     for(i = 0; i < numLength; i++){
         sum_Entire += num[i];
     } // iteration of number array adding
 
+
     avg_Entire = (double)sum_Entire / (double)numLength; // number array average method
-
-
 
     /* ----- calculation of fuzzy ----- */
 
@@ -506,7 +665,7 @@ void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double 
    //     }
    // }
 
-    // 사용자가 설정한 degree 나누기 각 소속 집단별로 최대값과 최소값를 구하여 그 차액 -> 전체 집단에서 한 눈금이 차지하는 비율
+    // 사용자가 설정한 degree 나누기 각 소속 집단별로 num_FuzzyAvgInLow최대값과 최소값를 구하여 그 차액 -> 전체 집단에서 한 눈금이 차지하는 비율
    // fuzzyLow = (double)degree / (double)(num_LowLast - num_Low); // Low 0.0에 해당하는 값을 매개변수로 받았을 때 이 과정은 의미가 없다.
     fuzzyLow = (double)degree / (double)(num_LowZero - num_Low);
     fuzzyHigh = (double)degree / (double)(num_High - num_HighZero);
@@ -531,7 +690,7 @@ void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double 
         // arr_FuzzyLow[i] = (fuzzyLow * (double)(num_LowLast - num[i])) / (double)degree;
         // 바로 앞 줄의 과정은 Low 0.0에 해당하는 값을 매개변수로 받았을 때 이 과정은 의미가 없다.
         arr_FuzzyLow[i] = (fuzzyLow * (double)(num_LowZero - num[i])) / (double)degree;
-        arr_FuzzHigh[i] = (fuzzyHigh * (double)(num[i] - num_HighZero)) / (double)degree;
+        arr_FuzzyHigh[i] = (fuzzyHigh * (double)(num[i] - num_HighZero)) / (double)degree;
         arr_FuzzyLowToAvg[i] = (fuzzyLowToAvg * (double)(num[i] - num_FuzzyAvgInLow)) / (double)degree;
         arr_FuzzyAvgToHigh[i] = (fuzzyAvgToHigh * (double)(num_FuzzyAvgInHigh - num[i])) / (double)degree;
     }
@@ -544,14 +703,14 @@ void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double 
         }
     } // low fuzzy가 0.0인 데이터를 num_LowZero에 넣고 break
 
-    fuzzyPrint("Low Fuzzy :\t\t", arr_FuzzyLow, numLength, 1);
+    // fuzzyPrint("Low Fuzzy :\t\t", arr_FuzzyLow, numLength, 1);
 
     // fuzzy print - high
-    fuzzyPrint("High Fuzzy :\t\t", arr_FuzzHigh, numLength, 1);
+    // fuzzyPrint("High Fuzzy :\t\t", arr_FuzzyHigh, numLength, 1);
 
     // fuzzy print - average
-    fuzzyPrint("LowToAvg Fuzzy :\t", arr_FuzzyLowToAvg, numLength, 2);
-    fuzzyPrint("AvgToHigh Fuzzy :\t", arr_FuzzyAvgToHigh, numLength, 2);
+    // fuzzyPrint("LowToAvg Fuzzy :\t", arr_FuzzyLowToAvg, numLength, 2);
+    // fuzzyPrint("AvgToHigh Fuzzy :\t", arr_FuzzyAvgToHigh, numLength, 2);
 
     // fuzzy decision
 
@@ -562,37 +721,40 @@ void fuzzyOn(double *_num, int _numLength, int _degree, double _avgRate, double 
     // num_Low : 전체 집단 중 가장 작은 데이터
 
     // fuzzy point number print
-    printf("\n");
-    printf("number's sum :\t\t%.5lf\n", sum_Entire);
-    printf("number's avg :\t\t%.5lf\n\n", avg_Entire);
+    // printf("\n");
 
-    printf("number's low :\t\t%.5lf\n", num_Low);
-    printf("number's avg 0.0 start: %.5lf\n", num_FuzzyAvgInLow);
-    printf("number's low 0.0 :\t%.5lf\n", num_LowZero);
-    printf("number's avg 1.0 :\t%.5lf\n", avg_FuzzyAvg);
-    printf("number's high 0.0 :\t%.5lf\n", num_HighZero);
-    printf("number's avg 0.0 end:\t%.5lf\n", num_FuzzyAvgInHigh);
-    printf("number's high :\t\t%.5lf\n\n", num_High);
+    printf("%s's sum :\t\t%.3lf\n", curName, sum_Entire);
+    printf("%s's avg :\t\t%.5lf\n", curName, avg_Entire);
 
-    printf("fuzzy decision:\t\t");
-    for (i = 0; i < numLength; i++) {
-        if (num[i] > num_FuzzyAvgInHigh) {
-            // 전체 데이터가 High 집단 중 Average 집단에 소속될 수 있는 최대한의 데이터보다 클 경우 '크다' 라고 표현한다.
-            printf("TALL ");
-        } else if (num[i] >= num_HighZero && num[i] < num_FuzzyAvgInHigh) {
-            // 전체 데이터가 High 집단 fuzzy 0.0일때의 데이터보다 같거나 크고 num_FuzzyAvgInHigh보다 작을 경우 '평균보다 크다' 라고 표현한다.
-            printf("ATAL ");
-        } else if (num[i] >= num_LowZero && num[i] < num_HighZero) {
-            // 전체 데이터가 Low 집단 fuzzy 0.0일때의 데이터보다 같거나 크고 num_HighZero보다 작을 경우 '평균이다' 라고 표현한다.
-            printf("AVRG ");
-        } else if (num[i] >= num_FuzzyAvgInLow && num[i] < num_LowZero) {
-            // 전체 데이터가 Low 집단 중 Average 집단에 소속될 수 있는 최소한의 데이터보다 같거나 크고 num_LowZero보다 작을 경우 '평균보다 작다' 라고 표현한다.
-            printf("AVSL ");
-        } else if (num[i] >= num_Low) {
-            // 전체 데이터가 전체 집단 중 가장 작은 데이터보다 같거나 클 경우 '작다' 라고 표현한다.
-            printf("SMAL ");
-        }
+    printf("%s's low :\t\t%.10lf\n", curName, num_Low);
+    printf("%s's avg 0.0 start: \t%.10lf\n", curName, num_FuzzyAvgInLow);
+    printf("%s's low 0.0 :\t\t%.10lf\n", curName, num_LowZero);
+    printf("%s's avg 1.0 :\t\t%.10lf\n", curName, avg_FuzzyAvg);
+    printf("%s's high 0.0 :\t\t%.10lf\n", curName, num_HighZero);
+    printf("%s's avg 0.0 end:\t%.10lf\n", curName, num_FuzzyAvgInHigh);
+    printf("%s's high :\t\t%.10lf\n", curName, num_High);
+
+    // printf("%s's fuzzy decision:\t", curName);
+    if(avg_Entire >= num_HighZero){
+        printf("%s's Danger is Very High\n", curName);
+        errorCode = VERY_HIGH;
+    } else if(avg_Entire >= avg_FuzzyAvg && avg_Entire < num_HighZero){
+        printf("%s's Danger is High\n", curName);
+        errorCode = HIGH;
+    } else if(avg_Entire >= num_LowZero && avg_Entire < avg_FuzzyAvg){
+        printf("%s's Danger Slightly Higher\n", curName);
+        errorCode = SLIGHTLY_HIGHER;
+    } else if(avg_Entire >= num_FuzzyAvgInLow && avg_Entire < num_LowZero){
+        printf("%s's Danger Increasing Higher\n", curName);
+        errorCode = INCREASE_HIGHER;
+    } else {
+        printf("%s's Danger is Not Detected\n", curName);
+        errorCode = NORMAL;
     }
+
+    printf("\n");
+
+    return errorCode;
 
 }
 
